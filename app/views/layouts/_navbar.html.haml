@@ -1,0 +1,41 @@
+%nav.navbar.navbar-expand-lg.bg-light
+  .container-fluid
+    %a.navbar-brand{:href => "#"} Rubygems
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarSupportedContent", "data-bs-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        %li.nav-item
+          = link_to "Home", root_path, { class: "nav-link #{'active' if current_page?(root_path)}" }
+        %li.nav-item
+          = link_to "Courses", courses_path, { class: "nav-link #{'active' if current_page?(courses_path)}" }
+        %li.nav-item
+          = link_to "Users", users_path, { class: "nav-link #{'active' if current_page?(users_path)}" }
+        %li.nav-item
+          = link_to "New course", new_course_path, { class: "nav-link #{'active' if current_page?(new_course_path)}" }
+      .form-inline.my-2.my-lg-0
+        = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
+          .input-group
+            = f.search_field :title_cont, class: "form-control-sm", style: "float:left; width: 150px;"
+            %button.btn.btn-primary.btn{type: "submit"}
+              %span.fa.fa-search{"aria-hidden": "true"}
+      %ul.navbar-nav.me.auto-mb-2.mb-lg-0
+        %li.nav-item.dropdown
+          %a.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+            - if current_user
+              = current_user.email
+            - else
+              Action
+          %ul.dropdown-menu.dropdown-menu-end
+            - if current_user
+              %li
+                = link_to "Account settings", edit_user_registration_path, class: "dropdown-item"
+              %li
+                %hr.dropdown-divider/
+              %li
+                = link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item"
+            - else
+              %li
+                = link_to "Sign Up", new_user_registration_path, class: "dropdown-item"
+              %li
+                = link_to "Sign In", new_user_session_path, class: "dropdown-item"

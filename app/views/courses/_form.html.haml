@@ -1,0 +1,13 @@
+= simple_form_for(@course) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+  .form-inputs
+    = f.input :title
+    = f.label :description
+    = f.rich_text_area :description
+    = f.input :short_description
+    = f.input :language, collection: Course.languages, default: "Russian"
+    = f.input :level, collection: ["Beginner", "Intermediate", "Advanced"], default: "Beginner"
+    = f.input :price
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: dev-user
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - '8432:5432'
+    volumes:
+    - udemy-postgres:/var/lib/postgresql/data_udemy
+
+volumes:
+  udemy-postgres:
+
+

@@ -1,0 +1,33 @@
+%h1
+  Courses:
+  = @courses.count
+
+.row
+  .col-md-2
+    .form-inline
+      = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
+        = f.label :title
+        = f.search_field :title_cont, placeholder: "title", class: "form-control mb-2"
+
+        = f.label :description
+        = f.search_field :short_description_cont, placeholder: "short description", class: "form-control mb-2"
+
+        = f.label :language
+        = f.select :language_cont, Course.languages, include_blank: true,  class: "form-select mb-2"
+
+        = f.label :level
+        = f.select :level_cont, Course.levels, include_blank: true, class: "form-control mb-2"
+
+        = f.label :price
+        = f.search_field :price_eq, placeholder: "price", class: "form-control mb-2"
+
+        = f.label "Teacher"
+        = f.search_field :user_email_cont, placeholder: "User email", class: "form-control mb-2"
+
+        = f.submit
+      = link_to "refresh", courses_path
+  .col-md-10
+    - @courses.each do |course|
+      .card-group.mb-2
+        - 3.times.each do
+          = render 'courses/course', course: course
